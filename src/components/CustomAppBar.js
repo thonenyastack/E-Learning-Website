@@ -17,12 +17,14 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import HideOnScroll from './HideOnScroll';
 import ScrollTop from './ScrollTop';
-import { Fab } from '@mui/material';
+import { Fab, Link } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import NextLink from 'next/link';
+
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
-
+// const navItems = [{name: 'Home', src: "/" }, {name: 'Courses', src: "/courses" },{name: 'Blog', src: "/blog" },{name: 'Contact', src: "/contact" }];
+const navItems = ['Home', 'Courses', 'Blog', 'Contact'];
 
 function CustomAppBar(props) {
   const { window } = props;
@@ -38,14 +40,30 @@ function CustomAppBar(props) {
         MUI
       </Typography>
       <Divider />
+      
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+
+        {navItems && navItems.map((item,idx) => {
+          console.log(item);
+        return (
+            <ListItem key={idx} disablePadding>
+              <Link href={"/courses"} color="secondary" component={NextLink}>
+                <ListItemButton sx={{ textAlign: 'center' }}>
+                  <ListItemText primary={item} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+         )
+        }
+          
+         /*  <ListItem key={idx} disablePadding>
+            <Link href={`/${item.src}`} color="secondary" component={NextLink}>
+              <ListItemButton sx={{ textAlign: 'center' }}>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </Link>
+          </ListItem> */
+        )}
       </List>
     </Box>
   );
@@ -83,9 +101,7 @@ function CustomAppBar(props) {
             </Box>
           </Toolbar>
         </AppBar>
-        
       </HideOnScroll>
-      
       <nav>
         <Drawer
           container={container}
@@ -105,7 +121,6 @@ function CustomAppBar(props) {
       </nav>
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
-        
       </Box>
     </Box>
   );
