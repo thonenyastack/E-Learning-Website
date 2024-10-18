@@ -23,8 +23,8 @@ import NextLink from 'next/link';
 
 
 const drawerWidth = 240;
-// const navItems = [{name: 'Home', src: "/" }, {name: 'Courses', src: "/courses" },{name: 'Blog', src: "/blog" },{name: 'Contact', src: "/contact" }];
-const navItems = ['Home', 'Courses', 'Blog', 'Contact'];
+const navItems = [{name: 'Home', src: "/" }, {name: 'Courses', src: "/courses" },{name: 'Blog', src: "/blog" },{name: 'Contact', src: "/contact" }];
+// const navItems = ['Home', 'Courses', 'Blog', 'Contact'];
 
 function CustomAppBar(props) {
   const { window } = props;
@@ -42,14 +42,12 @@ function CustomAppBar(props) {
       <Divider />
       
       <List>
-
         {navItems && navItems.map((item,idx) => {
-          console.log(item);
         return (
             <ListItem key={idx} disablePadding>
-              <Link href={"/courses"} color="secondary" component={NextLink}>
+              <Link href={`${item.src}`} color="secondary" component={NextLink}>
                 <ListItemButton sx={{ textAlign: 'center' }}>
-                  <ListItemText primary={item} />
+                  <ListItemText primary={item.name} />
                 </ListItemButton>
               </Link>
             </ListItem>
@@ -93,9 +91,9 @@ function CustomAppBar(props) {
               MUI
             </Typography>
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              {navItems.map((item) => (
-                <Button key={item} sx={{ color: '#fff' }}>
-                  {item}
+              {navItems.map((item,idx) => (
+                <Button key={idx} sx={{ color: '#fff' }}>
+                  {item.name}
                 </Button>
               ))}
             </Box>
@@ -119,9 +117,14 @@ function CustomAppBar(props) {
           {drawer}
         </Drawer>
       </nav>
-      <Box component="main" sx={{ p: 3 }}>
+      <Box component="main" sx={{ p: 3 }} id="back-to-top-anchor">
         <Toolbar />
       </Box>
+      <ScrollTop {...props}>
+        <Fab size="small" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </ScrollTop>
     </Box>
   );
 }
